@@ -27,7 +27,20 @@ jobs:
       - name: Pytest
         run: pytest --cov=ingestion --cov=dach_jobs --cov-report=term-missing
 
+      # dbt manifest is required at import time by @dbt_assets.
+      # Generate it before loading Definitions in CI.
+      - name: dbt deps
+        working-directory: dbt
+        run: dbt deps --profiles-dir .
+      - name: dbt parse (generate manifest)
+        working-directory: dbt
+        env:
+          DBT_PROFILES_DIR: "."
+        run: dbt parse --target ci
+
       - name: Dagster definitions load
+        env:
+          DBT_PROFILES_DIR: "dbt"
         run: python -c "from dach_jobs import defs; assert defs"
 
   dbt:
