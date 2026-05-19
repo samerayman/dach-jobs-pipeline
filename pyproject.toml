@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dach-jobs-pipeline"
+version = "0.1.0"
+description = "DACH tech job market intelligence lakehouse"
+requires-python = ">=3.11"
+dependencies = [
+  "dagster==1.9.5",
+  "dagster-webserver==1.9.5",
+  "dagster-duckdb==0.25.5",
+  "confluent-kafka==2.6.1",
+  "httpx==0.27.2",
+  "pydantic==2.9.2",
+  "python-dotenv==1.0.1",
+  "boto3==1.35.49",
+  "pyarrow==17.0.0",
+  "duckdb==1.1.3",
+  "structlog==24.4.0",
+  "tenacity==9.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==8.3.3",
+  "pytest-cov==5.0.0",
+  "ruff==0.7.1",
+  "mypy==1.13.0",
+  "respx==0.21.1",
+]
+dbt = [
+  "dbt-core==1.8.7",
+  "dbt-duckdb==1.8.4",
+]
+
+[tool.setuptools.packages.find]
+include = ["dach_jobs*", "ingestion*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S", "N", "RUF"]
+ignore = ["S101"]  # allow asserts in tests
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra -q"

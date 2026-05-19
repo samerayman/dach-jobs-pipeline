@@ -1,0 +1,26 @@
+Metadata-Version: 2.4
+Name: dach-jobs-pipeline
+Version: 0.1.0
+Summary: DACH tech job market intelligence lakehouse
+Requires-Python: >=3.11
+Requires-Dist: dagster==1.9.5
+Requires-Dist: dagster-webserver==1.9.5
+Requires-Dist: dagster-duckdb==0.25.5
+Requires-Dist: confluent-kafka==2.6.1
+Requires-Dist: httpx==0.27.2
+Requires-Dist: pydantic==2.9.2
+Requires-Dist: python-dotenv==1.0.1
+Requires-Dist: boto3==1.35.49
+Requires-Dist: pyarrow==17.0.0
+Requires-Dist: duckdb==1.1.3
+Requires-Dist: structlog==24.4.0
+Requires-Dist: tenacity==9.0.0
+Provides-Extra: dev
+Requires-Dist: pytest==8.3.3; extra == "dev"
+Requires-Dist: pytest-cov==5.0.0; extra == "dev"
+Requires-Dist: ruff==0.7.1; extra == "dev"
+Requires-Dist: mypy==1.13.0; extra == "dev"
+Requires-Dist: respx==0.21.1; extra == "dev"
+Provides-Extra: dbt
+Requires-Dist: dbt-core==1.8.7; extra == "dbt"
+Requires-Dist: dbt-duckdb==1.8.4; extra == "dbt"
