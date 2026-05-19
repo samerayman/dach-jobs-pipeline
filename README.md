@@ -72,19 +72,6 @@ dagster dev -m dach_jobs
 cd dbt && dbt build
 ```
 
-## Roadmap
-
-- [x] Bronze layer: Arbeitnow → Kafka → MinIO
-- [ ] Silver: dedup, SCD2 on salary/title edits
-- [ ] Gold: skill-demand, salary bands, remote-policy facts
-- [ ] dbt contracts between layers
-- [ ] OpenLineage + Marquez wiring
-- [ ] Streamlit dashboard
-- [ ] FastAPI read API
-- [ ] GitHub Actions CI (ruff, pytest, dbt build, GE checks)
-- [ ] Terraform deploy to GCP free tier
-- [ ] Backfill story: 6 months historical load + idempotency proof
-- [ ] Postmortem: a real bug + fix writeup
 
 ## Why this exists
 
