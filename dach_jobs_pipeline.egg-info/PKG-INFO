@@ -6,6 +6,9 @@ Requires-Python: >=3.11
 Requires-Dist: dagster==1.9.5
 Requires-Dist: dagster-webserver==1.9.5
 Requires-Dist: dagster-duckdb==0.25.5
+Requires-Dist: dagster-dbt==0.25.5
+Requires-Dist: dbt-core==1.8.7
+Requires-Dist: dbt-duckdb==1.8.4
 Requires-Dist: confluent-kafka==2.6.1
 Requires-Dist: httpx==0.27.2
 Requires-Dist: pydantic==2.9.2
@@ -21,6 +24,11 @@ Requires-Dist: pytest-cov==5.0.0; extra == "dev"
 Requires-Dist: ruff==0.7.1; extra == "dev"
 Requires-Dist: mypy==1.13.0; extra == "dev"
 Requires-Dist: respx==0.21.1; extra == "dev"
-Provides-Extra: dbt
-Requires-Dist: dbt-core==1.8.7; extra == "dbt"
-Requires-Dist: dbt-duckdb==1.8.4; extra == "dbt"
+Provides-Extra: serve
+Requires-Dist: streamlit==1.39.0; extra == "serve"
+Requires-Dist: fastapi==0.115.4; extra == "serve"
+Requires-Dist: uvicorn[standard]==0.32.0; extra == "serve"
+Provides-Extra: quality
+Requires-Dist: great-expectations==1.2.4; extra == "quality"
+Provides-Extra: lineage
+Requires-Dist: openlineage-dbt==1.24.2; extra == "lineage"

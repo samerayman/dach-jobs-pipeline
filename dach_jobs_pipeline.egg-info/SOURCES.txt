@@ -4,6 +4,7 @@ dach_jobs/__init__.py
 dach_jobs/definitions.py
 dach_jobs/assets/__init__.py
 dach_jobs/assets/bronze.py
+dach_jobs/assets/dbt_assets.py
 dach_jobs/resources/__init__.py
 dach_jobs/resources/kafka_consumer.py
 dach_jobs/resources/s3.py

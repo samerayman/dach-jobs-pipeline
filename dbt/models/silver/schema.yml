@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: silver_postings
+    description: >
+      Deduped, normalized job postings. One row per (source, source_id).
+      city_normalized and country_code are best-effort heuristics; gold
+      consumers should treat null country_code as "unknown DACH or outside."
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: source
+        data_type: varchar
+        constraints:
+          - type: not_null
+      - name: source_id
+        data_type: varchar
+        constraints:
+          - type: not_null
+        tests:
+          - unique:
+              config:
+                where: "source = 'arbeitnow'"
+      - name: slug
+        data_type: varchar
+      - name: company_name
+        data_type: varchar
+      - name: title
+        data_type: varchar
+        constraints:
+          - type: not_null
+      - name: description
+        data_type: varchar
+      - name: url
+        data_type: varchar
+      - name: location
+        data_type: varchar
+      - name: remote
+        data_type: boolean
+      - name: tags_json
+        data_type: varchar
+      - name: job_types_json
+        data_type: varchar
+      - name: posting_created_at
+        data_type: timestamp
+      - name: last_seen_at
+        data_type: timestamp
+        constraints:
+          - type: not_null
+      - name: city_normalized
+        data_type: varchar
+      - name: country_code
+        data_type: varchar
+        tests:
+          - accepted_values:
+              values: ["DE", "AT", "CH"]
+              config:
+                where: "country_code is not null"
+
+  - name: silver_posting_tags
+    description: "Long-format (posting, tag) pairs derived from silver_postings.tags_json."
+    columns:
+      - name: source
+        tests: [not_null]
+      - name: source_id
+        tests: [not_null]
+      - name: tag
+        tests: [not_null]

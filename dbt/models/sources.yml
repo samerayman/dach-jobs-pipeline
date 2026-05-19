@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: "Raw ingestion envelopes landed by the Dagster bronze asset."
+    meta:
+      external_location: "{{ var('bronze_glob') }}"
+    tables:
+      - name: arbeitnow_envelopes
+        description: "One row per Arbeitnow API response payload, with raw JSON."
+        external:
+          location: "{{ var('bronze_glob') }}"
+        columns:
+          - name: source
+            description: "Always 'arbeitnow' for this table."
+          - name: source_id
+            description: "Stable upstream id (Arbeitnow slug)."
+          - name: ingested_at
+            description: "When the producer wrote this envelope."
+          - name: source_payload
+            description: "Full upstream JSON payload (stringified). Replay surface."
+          - name: typed
+            description: "Validated typed projection (nullable on schema drift)."

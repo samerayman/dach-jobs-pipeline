@@ -1,0 +1,18 @@
+dach_jobs:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('DUCKDB_PATH', '../.warehouse.duckdb') }}"
+      extensions:
+        - httpfs
+      settings:
+        s3_endpoint: "{{ env_var('S3_ENDPOINT_HOST', 'localhost:9000') }}"
+        s3_access_key_id: "{{ env_var('S3_ACCESS_KEY', 'minioadmin') }}"
+        s3_secret_access_key: "{{ env_var('S3_SECRET_KEY', 'minioadmin') }}"
+        s3_use_ssl: false
+        s3_url_style: "path"
+        s3_region: "{{ env_var('S3_REGION', 'us-east-1') }}"
+    ci:
+      type: duckdb
+      path: ":memory:"

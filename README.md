@@ -72,6 +72,19 @@ dagster dev -m dach_jobs
 cd dbt && dbt build
 ```
 
+## Roadmap
+
+- [x] Bronze layer: Arbeitnow → Kafka → MinIO
+- [x] Silver: dedup, SCD2 via dbt snapshot on title/company/remote/location edits
+- [x] Gold: skill demand, remote-policy facts, salary mentions, companies
+- [x] dbt contracts on silver_postings, fct_postings, fct_skill_demand_daily
+- [x] OpenLineage + Marquez wiring (via openlineage-dbt / `dbt-ol`)
+- [x] Streamlit dashboard (`streamlit_app/`)
+- [x] FastAPI read API (`api/`)
+- [x] GitHub Actions CI (ruff, pytest, dagster load, dbt parse + compile, serve smoke)
+- [x] Terraform GCP free-tier deploy (GCS + BigQuery + Cloud Run + Pub/Sub)
+- [x] Backfill story (`docs/backfill.md`) with idempotency proof
+- [x] Postmortem (`docs/postmortem.md`) — real Dagster + PEP 563 bug
 
 ## Why this exists
 

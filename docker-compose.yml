@@ -90,6 +90,51 @@ services:
       timeout: 5s
       retries: 10
 
+  marquez-db:
+    image: postgres:16
+    container_name: dach-marquez-db
+    environment:
+      POSTGRES_USER: marquez
+      POSTGRES_PASSWORD: marquez
+      POSTGRES_DB: marquez
+    volumes:
+      - marquez-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U marquez"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  marquez:
+    image: marquezproject/marquez:0.50.0
+    container_name: dach-marquez
+    depends_on:
+      marquez-db:
+        condition: service_healthy
+    environment:
+      MARQUEZ_PORT: 5000
+      MARQUEZ_ADMIN_PORT: 5001
+      POSTGRES_HOST: marquez-db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: marquez
+      POSTGRES_USER: marquez
+      POSTGRES_PASSWORD: marquez
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+
+  marquez-web:
+    image: marquezproject/marquez-web:0.50.0
+    container_name: dach-marquez-web
+    depends_on:
+      - marquez
+    environment:
+      MARQUEZ_HOST: marquez
+      MARQUEZ_PORT: 5000
+    ports:
+      - "3001:3000"
+
 volumes:
   minio-data:
   postgres-data:
+  marquez-data:

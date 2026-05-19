@@ -1,0 +1,95 @@
+version: 2
+
+models:
+  - name: fct_postings
+    description: "One row per current job posting, denormalized for BI."
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: posting_id
+        data_type: varchar
+        constraints: [{type: not_null}]
+        tests: [unique]
+      - name: title
+        data_type: varchar
+        constraints: [{type: not_null}]
+      - name: company_name
+        data_type: varchar
+      - name: city
+        data_type: varchar
+      - name: country_code
+        data_type: varchar
+      - name: remote
+        data_type: boolean
+      - name: url
+        data_type: varchar
+      - name: posting_created_at
+        data_type: timestamp
+      - name: last_seen_at
+        data_type: timestamp
+        constraints: [{type: not_null}]
+      - name: posting_created_date
+        data_type: timestamp
+
+  - name: dim_company
+    description: "Companies with rollup counts across DACH postings."
+    columns:
+      - name: company_name
+        tests: [not_null, unique]
+      - name: posting_count
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 1
+
+  - name: dim_skill
+    description: "Canonical skill ↔ alias mapping driven by seed."
+    columns:
+      - name: skill
+        tests: [not_null]
+      - name: alias
+        tests: [not_null]
+
+  - name: fct_skill_demand_daily
+    description: "Daily count of postings per canonical skill per country."
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: posting_date
+        data_type: timestamp
+        constraints: [{type: not_null}]
+      - name: skill
+        data_type: varchar
+        constraints: [{type: not_null}]
+      - name: country_code
+        data_type: varchar
+      - name: posting_count
+        data_type: bigint
+        constraints: [{type: not_null}]
+      - name: remote_posting_count
+        data_type: bigint
+
+  - name: fct_remote_policy_daily
+    description: "Share of postings allowing remote, by day and country."
+    columns:
+      - name: posting_date
+        tests: [not_null]
+      - name: country_code
+        tests: [not_null]
+      - name: remote_share
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 1
+
+  - name: fct_salary_mentions
+    description: "Postings where we could parse a salary from the description."
+    columns:
+      - name: source_id
+        tests: [not_null]
+      - name: salary_eur
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 20000
+              max_value: 400000

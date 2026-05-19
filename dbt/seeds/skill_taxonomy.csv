@@ -1,0 +1,36 @@
+canonical,aliases
+python,python|py
+sql,sql|t-sql|ansi sql
+dbt,dbt|dbt-core
+airflow,airflow|apache airflow
+dagster,dagster
+spark,spark|apache spark|pyspark
+kafka,kafka|apache kafka|redpanda
+snowflake,snowflake
+bigquery,bigquery|gbq|google bigquery
+databricks,databricks
+aws,aws|amazon web services
+gcp,gcp|google cloud|google cloud platform
+azure,azure|microsoft azure
+docker,docker
+kubernetes,kubernetes|k8s
+terraform,terraform
+go,golang|go
+java,java
+scala,scala
+typescript,typescript|ts
+react,react|reactjs
+postgres,postgres|postgresql
+mongodb,mongodb|mongo
+redis,redis
+elasticsearch,elasticsearch|elastic
+tableau,tableau
+looker,looker
+powerbi,powerbi|power bi
+fivetran,fivetran
+dlt,dlt|data load tool
+iceberg,iceberg|apache iceberg
+delta,delta|delta lake
+hadoop,hadoop
+flink,flink|apache flink
+beam,apache beam|beam
